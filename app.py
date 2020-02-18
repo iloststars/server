@@ -1,62 +1,46 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from model import Record
+from exts import db
+from datetime import datetime
 import config
 
 app = Flask(__name__)
 app.config.from_object(config)
-db = SQLAlchemy(app)
+db.init_app(app)
 
-'''
-mysql> create table article(
-    -> id int primary key autoincrement,
-    -> title varchar(100) not null,
-    -> context text not null,
-    -> );
-'''
-
-
-# class Article(db.Model):  # 继承db.model
-#     __tablename__ = 'article'
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     title = db.Column(db.String(100), nullable=False)
-#     context = db.Column(db.Text, nullable=False)
-
-class Record(db.Model):
-    __tablename__ = 'record'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    datetime = db.Column(db.DATETIME, nullable=False)
-    flowMeter1 = db.Column(db.Float, nullable=False, default=0)
-    deltaFlow1 = db.Column(db.Float, default=0)
-    flowMeter2 = db.Column(db.Float, default=0)
-    deltaFlow2 = db.Column(db.Float, default=0)
-    sumFlow = db.Column(db.Float, default=0)
-    waterPressure = db.Column(db.Float, default=0)
-    waterLevel = db.Column(db.Float, default=0)
-    currentMeter2 = db.Column(db.Float, default=0)
-    pumpPressure2 = db.Column(db.Float, default=0)
-    wattMeter2 = db.Column(db.Float, default=0)
-    deltaWatt2 = db.Column(db.Float, default=0)
-    currentMeter4 = db.Column(db.Float, default=0)
-    pumpPressure4 = db.Column(db.Float, default=0)
-    wattMeter4 = db.Column(db.Float, default=0)
-    deltaWatt4 = db.Column(db.Float, default=0)
-    frequency4 = db.Column(db.Float, default=0)
-    barLift = db.Column(db.Float, default=0)  # 平均扬程
-    waterYield = db.Column(db.Float, default=0)  # 产水量
-
-
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/')
 def hello_world():
     # 增
+    # 1、创建Python对象
+    recordAdd = Record(datetime=datetime.now())
+    # 2、添加到对话
+    db.session.add(recordAdd)
+    # 3、提交对话
+    db.session.commit()
 
-    # 删
+    # #删
+    #     #1、查询要删除对象
+    # recordDelete= Record.query.filter(Record.id == 1).first()
+    #     #2、删除添加到对话
+    # db.session.delete(recordDelete)
+    #     #3、提交对话
+    # db.session.commit()
 
-    # 改
+    # # 改
+    #     #1、查询要修改的对象
+    # recordUpdate = Record.query.filter(Record.id == 2).first()
+    #     #2、修改对象
+    # recordUpdate.id = 0
+    #     #3、提交对话
+    # db.session.commit()
 
-    # 查
+    # # 查
+    # recordQuery = Record.query.filter(Record.id == 0).first()
+
     return 'Hello World!'
 
 
