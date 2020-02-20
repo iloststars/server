@@ -1,7 +1,7 @@
 # dialect+driver://username:password@host:port/database
 
 DIALECT = "mysql"
-DRIVER = "mysqldb"
+DRIVER = "mysqlconnector"
 USERNAME = "root"
 PASSWORD = "0000"
 HOST = "127.0.0.1"
