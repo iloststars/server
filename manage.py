@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask_script import Manager
 from app import app
 from db_script import DBManager

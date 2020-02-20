@@ -1,8 +1,9 @@
+# coding=utf-8
 # dialect+driver://username:password@host:port/database
 
 DIALECT = "mysql"
 DRIVER = "mysqlconnector"
-USERNAME = "root"
+USERNAME = "test"
 PASSWORD = "0000"
 HOST = "127.0.0.1"
 PORT = "3306"
